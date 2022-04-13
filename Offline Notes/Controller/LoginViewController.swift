@@ -29,9 +29,12 @@ class LoginViewController: UIViewController {
         if let userName = usernameTextField.text, let password = passwordTextField.text {
             var userArray = [User]()
             let fetchReq = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+            fetchReq.returnsObjectsAsFaults = false
+            
             do {
                 let newArr = try context.fetch(fetchReq) as! [User]
-                print(newArr)
+                
+                //print(newArr)
                 userArray = newArr
 
 
@@ -40,10 +43,13 @@ class LoginViewController: UIViewController {
                 return
             }
             // check if the username exists, if so, decrypt password
+            print("here")
             print(userArray)
             for user in userArray {
+                //print("\(user.email) \(user.phoneNumber) \(userName)")
                 if user.email == userName || user.phoneNumber == userName {
                     let decryptedPass = decryptPass(with: user.key!, oldPassword: user.encyptedPwd!)
+                    print(decryptedPass)
                     if decryptedPass == password {
                         print("password verifed")
                         phoneNumber = user.phoneNumber!
