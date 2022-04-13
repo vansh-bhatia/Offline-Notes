@@ -10,9 +10,9 @@ import CountryPickerView
 import CoreData
 
 class SignUpViewController: UIViewController, CountryPickerViewDelegate, CountryPickerViewDataSource, UITextFieldDelegate {
-    
+
     //MARK: - Methods to get, format and modify country codes
-    
+
     func countryPickerView(_ countryPickerView: CountryPickerView, didSelectCountry country: Country) {
         if country.phoneCode != "+91" {
             let alert = UIAlertController(title: "Sorry!", message: "This app is only available in India!", preferredStyle: .alert)
@@ -24,11 +24,11 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
     func showPhoneCodeInList(in countryPickerView: CountryPickerView) -> Bool {
         return true
     }
-    
-    
+
+
     @IBOutlet weak var countryPicker: CountryPickerView!
-    
-    
+
+
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
@@ -49,15 +49,15 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
     @IBOutlet weak var passwordOutlet: UITextField!
     @IBOutlet weak var nameOutlet: UITextField!
 
-    var userArray:[User]=[]
-    var phoneNumber:String?
-    
+    var userArray: [User] = []
+    var phoneNumber: String?
+
     //MARK: - Method called when button pressed to create account
-    
+
     @IBAction func createAccountPressed(_ sender: UIButton) {
 
         if let mobile = mobileNumberOutlet.text, let name = nameOutlet.text, let password = passwordOutlet.text, let email = emailOutlet.text {
-            if name == ""{
+            if name == "" {
                 let alert = UIAlertController(title: "Enter Name!", message: "Oops, Name cannot be blank!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 present(alert, animated: true, completion: nil)
@@ -67,39 +67,39 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
                 let alert = UIAlertController(title: "Invalid Email!", message: "Oops, Looks like you entered an incorrect email!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 present(alert, animated: true, completion: nil)
-                return 
-            }
-            if !isVaildMobile(mobile){
                 return
             }
-            if(!isValidPassword(password)){
+            if !isVaildMobile(mobile) {
                 return
             }
-            
+            if(!isValidPassword(password)) {
+                return
+            }
+
             print("Correct info")
-            
-            
+
+
             // first load up all details of all users and check if they match with already existing email and phone numbers
             let fetchReq = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-            do{
+            do {
                 let newArr = try context.fetch(fetchReq) as! [User]
                 print(newArr)
-                userArray=newArr
-                
-            }catch let error{
+                userArray = newArr
+
+            } catch let error {
                 print(error.localizedDescription)
             }
-            
+
             // iterate through the phone number and email to check if already exisits
-            
-            for user in userArray{
-                if user.email == email{
+
+            for user in userArray {
+                if user.email == email {
                     let alert = UIAlertController(title: "Invalid Email!", message: "Oops, Looks like the email already exists!", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     present(alert, animated: true, completion: nil)
                     return
                 }
-                if user.phoneNumber == mobile{
+                if user.phoneNumber == mobile {
                     let alert = UIAlertController(title: "Invalid Email!", message: "Oops, Looks like the phone number already exists!", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     present(alert, animated: true, completion: nil)
@@ -109,46 +109,46 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
             // encrypt the password and save the key as well as the new string
             var alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             var key = ""
-            for _ in 0..<26{
+            for _ in 0..<26 {
                 let rand = alphabets.randomElement()!
-                key+=String(rand)
+                key += String(rand)
                 alphabets.remove(at: alphabets.firstIndex(of: rand)!)
             }
             print(key)
-            
-            let encryptedPass = encryptPass(password,key: key)
-    
-            
+
+            let encryptedPass = encryptPass(password, key: key)
+
+
             print(encryptedPass)
-            
+
             let user = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as! User
             user.phoneNumber = mobile
             user.email = email
             user.key = key
             user.encyptedPwd = encryptedPass
             user.name = name
-            do{
+            do {
                 try context.save()
-            }catch let error{
+            } catch let error {
                 print(error.localizedDescription)
             }
             phoneNumber = mobile
-            
+
             performSegue(withIdentifier: "signUpToList", sender: self)
         }
     }
-    
+
     //MARK: - Methods to Validate entries
-    
-    func isVaildMobile(_ mobile:String)->Bool{
-        if mobile.count != 10{
+
+    func isVaildMobile(_ mobile: String) -> Bool {
+        if mobile.count != 10 {
             let alert = UIAlertController(title: "Invalid Number!", message: "Oops, Length of mobile number should be 10!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             present(alert, animated: true, completion: nil)
             return false
         }
-        for number in mobile{
-            if !"1234567890".contains(number){
+        for number in mobile {
+            if !"1234567890".contains(number) {
                 let alert = UIAlertController(title: "Invalid Number!", message: "Oops, Incorrect mobile number!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 present(alert, animated: true, completion: nil)
@@ -206,51 +206,51 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
             }
         }
         else {
-                let alert = UIAlertController(title: "Invalid Password!", message: "Oops, password length should be between 8 and 15!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Invalid Password!", message: "Oops, password length should be between 8 and 15!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
-        
+
         return false
     }
-    
+
     //MARK: - Method to collapse encrypt password from key
-    
-    func encryptPass(_ password:String, key:String)->String{
-        
+
+    func encryptPass(_ password: String, key: String) -> String {
+
         let alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var encryptedPass = ""
-        for char in password{
+        for char in password {
             let c = Character(char.uppercased())
-            
-            if let index = alphabets.firstIndex(of: c){
-                
+
+            if let index = alphabets.firstIndex(of: c) {
+
                 let newVal = key[index]
-                if c == char{
-                    encryptedPass+=String(newVal)
+                if c == char {
+                    encryptedPass += String(newVal)
                 }
-                else{
-                    encryptedPass+=String(newVal.lowercased())
+                else {
+                    encryptedPass += String(newVal.lowercased())
                 }
             }
-            else{
-                encryptedPass+=String(char)
+            else {
+                encryptedPass += String(char)
             }
-            
+
         }
         return encryptedPass
     }
-    
+
     //MARK: - Method to prepare for segue
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let lvc = segue.destination as? ListViewController{
+        if let lvc = segue.destination as? ListViewController {
             lvc.currentUser = phoneNumber ?? "9000000000"
         }
     }
-    
+
     //MARK: - Methods to collapse Keyboard
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
