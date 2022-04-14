@@ -94,7 +94,10 @@ class ListViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         note = notesArray[indexPath.row]
-        performSegue(withIdentifier: "tableToNote", sender: tableView)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "tableToNote", sender: tableView)
+        }
+        
     }
 
     // MARK: - viewWillAppear

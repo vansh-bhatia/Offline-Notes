@@ -53,8 +53,10 @@ class LoginViewController: UIViewController {
                     if decryptedPass == password {
                         print("password verifed")
                         phoneNumber = user.phoneNumber!
-
-                        performSegue(withIdentifier: "logInToListVC", sender: self)
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "logInToListVC", sender: self)
+                        }
+                        
                     }
                 }
             }

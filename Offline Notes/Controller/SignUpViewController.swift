@@ -133,8 +133,10 @@ class SignUpViewController: UIViewController, CountryPickerViewDelegate, Country
                 print(error.localizedDescription)
             }
             phoneNumber = mobile
-
-            performSegue(withIdentifier: "signUpToList", sender: self)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "signUpToList", sender: self)
+            }
+            
         }
     }
 
