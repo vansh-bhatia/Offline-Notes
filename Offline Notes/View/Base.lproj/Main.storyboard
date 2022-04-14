@@ -169,7 +169,7 @@
             </objects>
             <point key="canvasLocation" x="1775" y="-3"/>
         </scene>
-        <!--View Controller-->
+        <!--Offline Notes-->
         <scene sceneID="2pk-D3-JRm">
             <objects>
                 <viewController id="cvV-mK-xot" sceneMemberID="viewController">
@@ -233,13 +233,13 @@
                             <constraint firstItem="TEu-Kl-NnC" firstAttribute="trailing" secondItem="km5-V9-dPQ" secondAttribute="trailing" constant="50" id="wjw-Yk-cZf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6wo-8f-2U2"/>
+                    <navigationItem key="navigationItem" title="Offline Notes" id="6wo-8f-2U2"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yWr-3Z-Ldk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-184" y="-70"/>
         </scene>
-        <!--Sign Up View Controller-->
+        <!--Sign Up-->
         <scene sceneID="zu2-2c-S3j">
             <objects>
                 <viewController id="Vft-SU-Nqb" customClass="SignUpViewController" customModule="Offline_Notes" customModuleProvider="target" sceneMemberID="viewController">
@@ -352,7 +352,7 @@
                             <constraint firstItem="isR-lo-vIA" firstAttribute="top" secondItem="S60-tY-ptf" secondAttribute="topMargin" constant="25" id="wEX-ns-eMb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bJE-sF-9eT"/>
+                    <navigationItem key="navigationItem" title="Sign Up" id="bJE-sF-9eT"/>
                     <connections>
                         <outlet property="countryPicker" destination="4zd-Rm-Pu6" id="y3J-lA-DI1"/>
                         <outlet property="emailOutlet" destination="YTX-yq-hwe" id="1w6-Ok-RYR"/>
@@ -366,7 +366,7 @@
             </objects>
             <point key="canvasLocation" x="769.56521739130437" y="-450"/>
         </scene>
-        <!--Login View Controller-->
+        <!--Log In-->
         <scene sceneID="KYO-Wu-1Q9">
             <objects>
                 <viewController id="1aY-qE-Pu0" customClass="LoginViewController" customModule="Offline_Notes" customModuleProvider="target" sceneMemberID="viewController">
@@ -423,7 +423,7 @@
                             <constraint firstItem="do6-gb-jNz" firstAttribute="centerX" secondItem="BU5-no-6X2" secondAttribute="centerX" id="z8J-JW-oy2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="gGU-PI-OBJ"/>
+                    <navigationItem key="navigationItem" title="Log In" id="gGU-PI-OBJ"/>
                     <connections>
                         <outlet property="passwordTextField" destination="L1y-sN-X6Z" id="p4c-fS-zlt"/>
                         <outlet property="usernameTextField" destination="LHE-cX-YVJ" id="6FA-bn-5Wj"/>
